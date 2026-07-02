@@ -362,24 +362,321 @@ Need Object
 ```
 
 ---
+# 📝 Interview Questions with Answers
 
-# 🎯 Interview MCQs
+## 🟢 Easy
 
-### Easy
+### 1. What is the default value of an instance variable?
 
-- What is the default value of an instance variable?
-- Which variable is stored in Stack memory?
-- Which variable belongs to an object?
-- How many copies of a static variable exist?
+**Answer:** It depends on the data type.
 
-### Medium
+| Data Type | Default Value |
+|------------|--------------|
+| int | 0 |
+| long | 0L |
+| float | 0.0f |
+| double | 0.0 |
+| char | '\u0000' |
+| boolean | false |
+| Object/String | null |
 
-- Can a static method access an instance variable?
-- Can we access a static variable using an object?
+> **Note:** Only Instance and Static variables get default values.
 
-### Hard
+---
 
-- Variable Shadowing
-- Static Context
-- Default Values
-- Compilation Errors
+### 2. Which variable is stored in Stack memory?
+
+**Answer:** Local Variable
+
+Example:
+
+```java
+void show() {
+    int x = 10;
+}
+```
+
+`x` is stored in **Stack Memory**.
+
+---
+
+### 3. Which variable belongs to an object?
+
+**Answer:** Instance Variable
+
+Every object has its own copy.
+
+```java
+class Student{
+    int age;
+}
+```
+
+---
+
+### 4. How many copies of a static variable exist?
+
+**Answer:** Only **one** copy.
+
+It is shared among all objects.
+
+```java
+class Student{
+    static String college = "KLE";
+}
+```
+
+---
+
+## 🟡 Medium
+
+### 5. Can a static method access an instance variable?
+
+**Answer:** ❌ No
+
+Reason:
+
+A static method belongs to the class, whereas an instance variable belongs to an object.
+
+Incorrect
+
+```java
+class Test{
+
+    int x = 10;
+
+    public static void main(String[] args){
+        System.out.println(x);
+    }
+}
+```
+
+**Compilation Error**
+
+Correct
+
+```java
+class Test{
+
+    int x = 10;
+
+    public static void main(String[] args){
+
+        Test t = new Test();
+
+        System.out.println(t.x);
+
+    }
+}
+```
+
+---
+
+### 6. Can we access a static variable using an object?
+
+**Answer:** ✅ Yes
+
+```java
+Student s = new Student();
+
+System.out.println(s.college);
+```
+
+But the recommended way is
+
+```java
+System.out.println(Student.college);
+```
+
+because static members belong to the class.
+
+---
+
+## 🔴 Hard
+
+### 7. What is Variable Shadowing?
+
+When a local variable has the same name as an instance or static variable, the **local variable gets priority**.
+
+Example
+
+```java
+class Test{
+
+    static int x = 5;
+
+    void show(){
+
+        int x = 10;
+
+        System.out.println(x);
+
+    }
+}
+```
+
+Output
+
+```
+10
+```
+
+Priority
+
+```
+Local
+↓
+Instance
+↓
+Static
+```
+
+---
+
+### 8. What is Static Context?
+
+A **static context** means execution inside a static method or static block.
+
+Example
+
+```java
+public static void main(String[] args)
+```
+
+Inside a static context:
+
+- ✅ Static variables can be accessed directly.
+- ✅ Static methods can be called directly.
+- ❌ Instance variables cannot be accessed directly.
+- ❌ Instance methods cannot be called directly.
+
+Need an object to access instance members.
+
+---
+
+### 9. Which variables get default values?
+
+| Variable Type | Default Value |
+|---------------|--------------|
+| Local | ❌ No |
+| Instance | ✅ Yes |
+| Static | ✅ Yes |
+
+Example
+
+```java
+class Test{
+
+    int x;
+
+    static int y;
+
+    void show(){
+
+        int z;
+
+    }
+
+}
+```
+
+```
+x = 0
+y = 0
+z = Compilation Error if used without initialization
+```
+
+---
+
+### 10. What causes Compilation Errors related to variables?
+
+Most common reasons:
+
+### Case 1: Local variable not initialized
+
+```java
+int x;
+
+System.out.println(x);
+```
+
+❌ Compilation Error
+
+---
+
+### Case 2: Accessing instance variable inside static method
+
+```java
+class Test{
+
+    int x = 10;
+
+    public static void main(String[] args){
+
+        System.out.println(x);
+
+    }
+}
+```
+
+❌ Compilation Error
+
+---
+
+### Case 3: Duplicate local variable
+
+```java
+int x = 10;
+int x = 20;
+```
+
+❌ Compilation Error
+
+---
+
+### Case 4: Variable out of scope
+
+```java
+{
+    int x = 10;
+}
+
+System.out.println(x);
+```
+
+❌ Compilation Error
+
+---
+
+# ⭐ Interviewer's Favorite Questions
+
+1. Difference between Local, Instance and Static Variables.
+2. Why don't Local Variables have default values?
+3. Can a static method access an instance variable?
+4. Can we access a static variable using an object?
+5. What is Variable Shadowing?
+6. What is Static Context?
+7. Which variables get default values?
+8. Why does Java throw a compilation error for uninitialized local variables?
+
+---
+
+# ⚡ 30-Second Revision
+
+```
+✔ Local → Stack → No Default
+
+✔ Instance → Heap → Default → Object Specific
+
+✔ Static → Method Area → One Copy → Shared
+
+✔ Local > Instance > Static
+
+✔ Static Method ❌ Instance Variable
+
+✔ Static Variable → Access using ClassName
+
+✔ Local Variable must be initialized
+
+✔ Static Context → Only Static members directly accessible
+```
